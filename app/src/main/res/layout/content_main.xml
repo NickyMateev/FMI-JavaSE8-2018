@@ -13,15 +13,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
+        android:background="@drawable/border"
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/previousWeekBtn"
             android:layout_width="wrap_content"
-            android:layout_height="42dp"
+            android:layout_height="25dp"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_media_previous" />
+            android:layout_gravity="center"
+            android:tint="#A0A0A0"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24px" />
 
         <TextView
             android:id="@+id/weekText"
@@ -31,35 +34,25 @@
             android:fontFamily="@font/arimo"
             android:text="TextView"
             android:textAlignment="center"
+            android:layout_gravity="center"
             android:textColor="#000000"
             android:textSize="25sp"
             tools:text="Current Week" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/nextWeekBtn"
             android:layout_width="wrap_content"
-            android:layout_height="42dp"
+            android:layout_height="25dp"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_media_next" />
+            android:layout_gravity="center"
+            android:tint="#A0A0A0"
+            app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24px" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#d6d6d6"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:background="@drawable/border"
         android:orientation="vertical">
 
         <LinearLayout
@@ -95,23 +88,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:paddingTop="5pt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#d6d6d6"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_margin="10pt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:background="@drawable/border"
         android:orientation="vertical">
 
         <TableLayout
@@ -416,20 +396,6 @@
 
             </TableRow>
         </TableLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#d6d6d6"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-
     </LinearLayout>
 
 </LinearLayout>
