@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -81,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="calories"
+                android:text="2700"
                 android:inputType="numberSigned"
                 android:textColor="#000000"
                 android:textSize="14sp" />
@@ -101,6 +104,308 @@
             android:layout_weight="1" />
 
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10pt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/dayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10pt"
+                    android:text="Day"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/weightLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weight"
+                    android:layout_gravity="center"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/caloriesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="35pt"
+                    android:text="Calories"
+                    android:textColor="#000000" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/mondayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5pt"
+                    android:text="Monday"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/mondayWeightLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="kg / lbs"
+                    android:inputType="numberDecimal"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/mondayCaloriesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="cal"
+                    android:inputType="numberSigned"
+                    android:paddingLeft="60pt"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tuesdayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5pt"
+                    android:text="Tuesday"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/tuesdayWeightLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="kg / lbs"
+                    android:inputType="numberDecimal"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tuesdayCaloriesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="cal"
+                    android:inputType="numberSigned"
+                    android:paddingLeft="60pt"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/wednesdayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5pt"
+                    android:text="Wednesday"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/wednesdayWeightLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="kg / lbs"
+                    android:inputType="numberDecimal"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/wednesdayCaloriesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="cal"
+                    android:inputType="numberSigned"
+                    android:paddingLeft="60pt"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/thursdayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5pt"
+                    android:text="Thursday"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/thursdayWeightLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="kg / lbs"
+                    android:inputType="numberDecimal"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/thursdayCaloriesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="cal"
+                    android:inputType="numberSigned"
+                    android:paddingLeft="60pt"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/fridayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5pt"
+                    android:text="Friday"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/fridayWeightLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="kg / lbs"
+                    android:inputType="numberDecimal"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/fridayCaloriesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="cal"
+                    android:inputType="numberSigned"
+                    android:paddingLeft="60pt"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/saturdayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5pt"
+                    android:text="Saturday"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/saturdayWeightLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="kg / lbs"
+                    android:inputType="numberDecimal"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/saturdayCaloriesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="cal"
+                    android:inputType="numberSigned"
+                    android:paddingLeft="60pt"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/sundayLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5pt"
+                    android:text="Sunday"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/sundayWeightLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="kg / lbs"
+                    android:inputType="numberDecimal"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/sundayCaloriesLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="cal"
+                    android:inputType="numberSigned"
+                    android:paddingLeft="60pt"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
 
 

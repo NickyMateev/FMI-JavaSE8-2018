@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 public class IntroActivity extends AppCompatActivity {
 
-    private static int INTRO_SPLASH_TIME_OUT = 500;
+    private static int INTRO_SPLASH_TIME_OUT = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
