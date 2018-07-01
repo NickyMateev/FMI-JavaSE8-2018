@@ -481,7 +481,7 @@
                 android:layout_marginRight="4pt"
                 android:layout_weight="1"
                 android:fontFamily="@font/carrois_gothic"
-                android:text="16043/17000"
+                android:text="0 / 0"
                 android:gravity="right"
                 android:textColor="#000000"
                 android:textStyle="bold" />
@@ -494,8 +494,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="5pt"
             android:background="@drawable/border"
-            android:max="17000"
-            android:progress="16043"
             android:progressDrawable="@drawable/custom_progress_bar" />
     </LinearLayout>
 

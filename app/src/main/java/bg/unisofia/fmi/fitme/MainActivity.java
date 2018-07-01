@@ -77,12 +77,8 @@ public class MainActivity extends AppCompatActivity {
             dailyCalorieGoalBtn.setText(String.valueOf(currentWeek.getDailyCalories()));
             currentWeekDays = currentWeek.getDays();
             for (Day day : currentWeekDays) {
-                if (day.getWeight() > 0) {
-                   weightFields[day.getDayOfWeek()].setText(String.valueOf(day.getWeight()));
-                }
-                if (day.getCalories() > 0) {
-                    calorieFields[day.getDayOfWeek()].setText(String.valueOf(day.getCalories()));
-                }
+                weightFields[day.getDayOfWeek()].setText(day.getWeight() > 0 ? String.valueOf(day.getWeight()) : "");
+                calorieFields[day.getDayOfWeek()].setText(day.getCalories() > 0 ? String.valueOf(day.getCalories()) : "");
             }
         }
 
@@ -165,13 +161,12 @@ public class MainActivity extends AppCompatActivity {
             weightFields[j].setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View view, boolean b) {
-                    String weight = weightFields[j].getText().toString();
-                    if (!weight.isEmpty()) {
-                        Day day = currentWeekDays.get(j);
-                        day.setWeight(Double.parseDouble(weight));
-                        day.save();
-                        avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(currentWeekDays)));
-                    }
+                    String weightString = weightFields[j].getText().toString();
+                    double weight = !weightString.isEmpty() ? Double.parseDouble(weightString) : 0;
+                    Day day = currentWeekDays.get(j);
+                    day.setWeight(weight);
+                    day.save();
+                    avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(currentWeekDays)));
                 }
             });
         }
