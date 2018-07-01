@@ -77,12 +77,12 @@
                 android:id="@+id/btnDailyCal"
                 android:layout_width="64dp"
                 android:layout_height="22dp"
-                android:layout_weight="1"
                 android:layout_gravity="center"
                 android:layout_marginRight="5pt"
+                android:layout_weight="1"
                 android:background="@android:color/background_light"
                 android:fontFamily="@font/carrois_gothic"
-                android:text="2700"
+                android:text="0"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="15sp" />
@@ -481,7 +481,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/carrois_gothic"
-                android:text="123"
+                android:text="0"
                 android:textAlignment="center"
                 android:textColor="#000000" />
 

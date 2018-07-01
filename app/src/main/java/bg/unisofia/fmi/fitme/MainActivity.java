@@ -2,8 +2,6 @@ package bg.unisofia.fmi.fitme;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,15 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.text.DecimalFormat;
-import java.time.DayOfWeek;
-import java.time.temporal.WeekFields;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
+
+import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.models.Week;
+import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.persistency.MyDBHandler;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,10 +27,14 @@ public class MainActivity extends AppCompatActivity {
     private static int[] weeklyCalories = new int[7];
     private static double[] weeklyWeight = new double[7];
 
+    private static MyDBHandler db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = new MyDBHandler(this, null, null, 1);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         String weekEndDate = getMonthDayString(getWeekEndDate());
 
         currentWeekText.setText(weekStartDate + " - " + weekEndDate);
-
+        dailyCalorieGoal = db.getDailyCaloriesForWeek(getWeekStartDate().getTime(), getWeekEndDate().getTime());
         initializeWeeklyData();
         attachHandlers();
 
@@ -103,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeWeeklyData() {
         Button dailyCal = (Button) findViewById(R.id.btnDailyCal);
-        dailyCalorieGoal = Integer.parseInt(dailyCal.getText().toString());
+        dailyCal.setText(String.valueOf(dailyCalorieGoal));
         weeklyCalorieGoal = 7 * dailyCalorieGoal;
 
         weeklyCalories[0] = Integer.parseInt(((EditText)findViewById(R.id.mondayCalories)).getText().toString());
@@ -129,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     private void attachHandlers() {
         attachWeekNavigationListeners();
         attachWeightListeners();
-        attachCalorieListeners();
+        attachCalorieGoalListeners();
     }
 
     private void attachWeekNavigationListeners() {
@@ -207,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void attachCalorieListeners() {
+    private void attachCalorieGoalListeners() {
         final Button btnDailyCal = (Button) findViewById(R.id.btnDailyCal);
         btnDailyCal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
                                     R.string.success_update_msg,
                                     Toast.LENGTH_LONG).show();
                             btnDailyCal.setText(dailyCalInput.getText());
+                            updateGoalCaloriesInDB(Integer.parseInt(dailyCalInput.getText().toString()));
                             refreshCalorieGoals();
                             setupProgressBar();
                             dialog.dismiss();
@@ -305,6 +304,10 @@ public class MainActivity extends AppCompatActivity {
                 setupProgressBar();
             }
         });
+    }
+
+    private void updateGoalCaloriesInDB(int dailyCalorieGoal) {
+        db.updateDailyCaloriesGoalForWeek(new Week(getWeekStartDate().getTime(), getWeekEndDate().getTime(), dailyCalorieGoal));
     }
 
     private void refreshCalorieGoals() {
