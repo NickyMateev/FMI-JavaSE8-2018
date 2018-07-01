@@ -28,6 +28,8 @@ import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static int DAYS_IN_WEEK = 7;
+
     private static Calendar currentFirstWeekDay;
     private static Calendar currentLastWeekDay;
 
@@ -36,16 +38,17 @@ public class MainActivity extends AppCompatActivity {
     private static int dailyCalorieGoal;
     private static int weeklyCalorieGoal;
 
-    private static int[] calorieEntries = new int[7];
-    private static double[] weightEntries = new double[7];
+    private static int[] calorieEntries = new int[DAYS_IN_WEEK];
+    private static double[] weightEntries = new double[DAYS_IN_WEEK];
 
+    EditText[] weightFields = new EditText[DAYS_IN_WEEK];
+    EditText[] calorieFields = new EditText[DAYS_IN_WEEK];
 
     Toolbar toolbar;
-    private static TextView currentWeekLabel, avgWeight, progressBarProportion;
+    TextView currentWeekLabel, avgWeight, progressBarProportion;
     Button previousWeekBtn, nextWeekBtn;
     Button dailyCalorieGoalBtn;
-    EditText mondayWeight, tuesdayWeight, wednesdayWeight, thursdayWeight, fridayWeight, saturdayWeight, sundayWeight;
-    EditText mondayCalories, tuesdayCalories, wednesdayCalories, thursdayCalories, fridayCalories, saturdayCalories, sundayCalories;
+
     ProgressBar progressBar;
 
     @Override
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void refreshCalorieGoalData() {
         dailyCalorieGoal = Integer.parseInt(dailyCalorieGoalBtn.getText().toString());
-        weeklyCalorieGoal = 7 * dailyCalorieGoal;
+        weeklyCalorieGoal = DAYS_IN_WEEK * dailyCalorieGoal;
     }
 
     private void refreshProgressBar() {
@@ -116,21 +119,22 @@ public class MainActivity extends AppCompatActivity {
         avgWeight = (TextView) findViewById(R.id.avgWeight);
         dailyCalorieGoalBtn = (Button) findViewById(R.id.btnDailyCal);
 
-        mondayCalories = (EditText) findViewById(R.id.mondayCalories);
-        tuesdayCalories = (EditText) findViewById(R.id.tuesdayCalories);
-        wednesdayCalories = (EditText) findViewById(R.id.wednesdayCalories);
-        thursdayCalories = (EditText) findViewById(R.id.thursdayCalories);
-        fridayCalories = (EditText) findViewById(R.id.fridayCalories);
-        saturdayCalories = (EditText) findViewById(R.id.saturdayCalories);
-        sundayCalories = (EditText) findViewById(R.id.sundayCalories);
+        weightFields[0] = (EditText) findViewById(R.id.mondayWeight);
+        weightFields[1] = (EditText) findViewById(R.id.tuesdayWeight);
+        weightFields[2] = (EditText) findViewById(R.id.wednesdayWeight);
+        weightFields[3] = (EditText) findViewById(R.id.thursdayWeight);
+        weightFields[4] = (EditText) findViewById(R.id.fridayWeight);
+        weightFields[5] = (EditText) findViewById(R.id.saturdayWeight);
+        weightFields[6] = (EditText) findViewById(R.id.sundayWeight);
 
-        mondayWeight = (EditText) findViewById(R.id.mondayWeight);
-        tuesdayWeight = (EditText) findViewById(R.id.tuesdayWeight);
-        wednesdayWeight = (EditText) findViewById(R.id.wednesdayWeight);
-        thursdayWeight = (EditText) findViewById(R.id.thursdayWeight);
-        fridayWeight = (EditText) findViewById(R.id.fridayWeight);
-        saturdayWeight = (EditText) findViewById(R.id.saturdayWeight);
-        sundayWeight = (EditText) findViewById(R.id.sundayWeight);
+        calorieFields[0] = (EditText) findViewById(R.id.mondayCalories);
+        calorieFields[1] = (EditText) findViewById(R.id.tuesdayCalories);
+        calorieFields[2] = (EditText) findViewById(R.id.wednesdayCalories);
+        calorieFields[3] = (EditText) findViewById(R.id.thursdayCalories);
+        calorieFields[4] = (EditText) findViewById(R.id.fridayCalories);
+        calorieFields[5] = (EditText) findViewById(R.id.saturdayCalories);
+        calorieFields[6] = (EditText) findViewById(R.id.sundayCalories);
+
 
         progressBarProportion = (TextView) findViewById(R.id.progressBarProportion);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -158,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
         avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
 
-        weeklyCalorieGoal = 7 * currentWeek.getDailyCalories();
+        weeklyCalorieGoal = DAYS_IN_WEEK * currentWeek.getDailyCalories();
         refreshProgressBar();
     }
 
@@ -172,8 +176,8 @@ public class MainActivity extends AppCompatActivity {
         previousWeekBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, -7);
-                currentLastWeekDay.add(Calendar.DAY_OF_WEEK, -7);
+                currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, -DAYS_IN_WEEK);
+                currentLastWeekDay.add(Calendar.DAY_OF_WEEK, -DAYS_IN_WEEK);
                 setCurrentWeekLabel();
             }
         });
@@ -181,72 +185,46 @@ public class MainActivity extends AppCompatActivity {
         nextWeekBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, 7);
-                currentLastWeekDay.add(Calendar.DAY_OF_WEEK, 7);
+                currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, DAYS_IN_WEEK);
+                currentLastWeekDay.add(Calendar.DAY_OF_WEEK, DAYS_IN_WEEK);
                 setCurrentWeekLabel();
             }
         });
     }
 
     private void attachWeightListeners() {
-        mondayWeight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                weightEntries[0] = Double.parseDouble(mondayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
-            }
-        });
 
-        tuesdayWeight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                weightEntries[1] = Double.parseDouble(tuesdayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
-            }
-        });
-
-        wednesdayWeight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                weightEntries[2] = Double.parseDouble(wednesdayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
-            }
-        });
-
-        thursdayWeight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                weightEntries[3] = Double.parseDouble(thursdayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
-            }
-        });
-
-        fridayWeight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                weightEntries[4] = Double.parseDouble(fridayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
-            }
-        });
-
-        saturdayWeight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                weightEntries[5] = Double.parseDouble(saturdayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
-            }
-        });
-
-        sundayWeight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                weightEntries[6] = Double.parseDouble(sundayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
-            }
-        });
+        for (int i = 0; i < DAYS_IN_WEEK; i++) {
+            final int j = i;
+            weightFields[j].setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    String weight = weightFields[j].getText().toString();
+                    if (!weight.isEmpty()) {
+                        weightEntries[j] = Double.parseDouble(weight);
+                        avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
+                    }
+                }
+            });
+        }
     }
 
     private void attachCalorieGoalListeners() {
+
+        for (int i = 0; i < DAYS_IN_WEEK; i++) {
+            final int j = i;
+            calorieFields[j].setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    String calories = calorieFields[j].getText().toString();
+                    if (!calories.isEmpty()) {
+                        calorieEntries[j] = Integer.parseInt(calories);
+                        refreshProgressBar();
+                    }
+                }
+            });
+        }
+
         dailyCalorieGoalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -285,62 +263,6 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 dialog.show();
-            }
-        });
-
-        mondayCalories.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                calorieEntries[0] = Integer.parseInt(mondayCalories.getText().toString());
-                refreshProgressBar();
-            }
-        });
-
-        tuesdayCalories.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                calorieEntries[1] = Integer.parseInt(tuesdayCalories.getText().toString());
-                refreshProgressBar();
-            }
-        });
-
-        wednesdayCalories.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                calorieEntries[2] = Integer.parseInt(wednesdayCalories.getText().toString());
-                refreshProgressBar();
-            }
-        });
-
-        thursdayCalories.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                calorieEntries[3] = Integer.parseInt(thursdayCalories.getText().toString());
-                refreshProgressBar();
-            }
-        });
-
-        fridayCalories.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                calorieEntries[4] = Integer.parseInt(fridayCalories.getText().toString());
-                refreshProgressBar();
-            }
-        });
-
-        saturdayCalories.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                calorieEntries[5] = Integer.parseInt(saturdayCalories.getText().toString());
-                refreshProgressBar();
-            }
-        });
-
-        sundayCalories.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                calorieEntries[6] = Integer.parseInt(sundayCalories.getText().toString());
-                refreshProgressBar();
             }
         });
     }

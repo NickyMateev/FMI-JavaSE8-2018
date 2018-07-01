@@ -165,9 +165,10 @@
                     android:layout_marginLeft="10pt"
                     android:fontFamily="@font/carrois_gothic"
                     android:gravity="center"
-                    android:hint="kg / lbs"
+                    android:hint="kg"
                     android:inputType="numberDecimal"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
                 <EditText
@@ -178,8 +179,8 @@
                     android:hint="cal"
                     android:inputType="numberSigned"
                     android:paddingLeft="60pt"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
             </TableRow>
@@ -206,10 +207,10 @@
                     android:layout_marginLeft="10pt"
                     android:fontFamily="@font/carrois_gothic"
                     android:gravity="center"
-                    android:hint="kg / lbs"
+                    android:hint="kg"
                     android:inputType="numberDecimal"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
                 <EditText
@@ -220,8 +221,8 @@
                     android:hint="cal"
                     android:inputType="numberSigned"
                     android:paddingLeft="60pt"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
             </TableRow>
@@ -248,10 +249,10 @@
                     android:layout_marginLeft="10pt"
                     android:fontFamily="@font/carrois_gothic"
                     android:gravity="center"
-                    android:hint="kg / lbs"
+                    android:hint="kg"
                     android:inputType="numberDecimal"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
                 <EditText
@@ -262,8 +263,8 @@
                     android:hint="cal"
                     android:inputType="numberSigned"
                     android:paddingLeft="60pt"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
             </TableRow>
@@ -290,10 +291,10 @@
                     android:layout_marginLeft="10pt"
                     android:fontFamily="@font/carrois_gothic"
                     android:gravity="center"
-                    android:hint="kg / lbs"
+                    android:hint="kg"
                     android:inputType="numberDecimal"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
                 <EditText
@@ -304,8 +305,8 @@
                     android:hint="cal"
                     android:inputType="numberSigned"
                     android:paddingLeft="60pt"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
             </TableRow>
@@ -332,10 +333,10 @@
                     android:layout_marginLeft="10pt"
                     android:fontFamily="@font/carrois_gothic"
                     android:gravity="center"
-                    android:hint="kg / lbs"
+                    android:hint="kg"
                     android:inputType="numberDecimal"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
                 <EditText
@@ -346,8 +347,8 @@
                     android:hint="cal"
                     android:inputType="numberSigned"
                     android:paddingLeft="60pt"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
             </TableRow>
@@ -374,10 +375,10 @@
                     android:layout_marginLeft="10pt"
                     android:fontFamily="@font/carrois_gothic"
                     android:gravity="center"
-                    android:hint="kg / lbs"
+                    android:hint="kg"
                     android:inputType="numberDecimal"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
                 <EditText
@@ -388,8 +389,8 @@
                     android:hint="cal"
                     android:inputType="numberSigned"
                     android:paddingLeft="60pt"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
             </TableRow>
@@ -415,10 +416,10 @@
                     android:layout_marginLeft="10pt"
                     android:fontFamily="@font/carrois_gothic"
                     android:gravity="center"
-                    android:hint="kg / lbs"
+                    android:hint="kg"
                     android:inputType="numberDecimal"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
                 <EditText
@@ -429,8 +430,8 @@
                     android:hint="cal"
                     android:inputType="numberSigned"
                     android:paddingLeft="60pt"
-                    android:text="0"
                     android:textColor="#000000"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp" />
 
             </TableRow>
