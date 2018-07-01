@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/aldrich</item>
         <item>@font/archivo_narrow</item>
         <item>@font/arimo</item>
+        <item>@font/carrois_gothic</item>
+        <item>@font/carrois_gothic_sc</item>
         <item>@font/cousine</item>
     </array>
 </resources>
