@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             dailyCalorieGoalBtn.setText(String.valueOf(currentWeek.getDailyCalories()));
             currentWeekDays = currentWeek.getDays();
             for (Day day : currentWeekDays) {
-                System.out.println(day);
                 if (day.getWeight() > 0) {
                    weightFields[day.getDayOfWeek()].setText(String.valueOf(day.getWeight()));
                 }
@@ -96,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
         int weeklyCalories = currentWeek.getDailyCalories() * DAYS_IN_WEEK;
 
         progressBarProportion.setText(totalCalories + " / " + weeklyCalories);
-        progressBar.setProgress(totalCalories);
         progressBar.setMax(weeklyCalories);
+        progressBar.setProgress(totalCalories);
     }
 
     private void initializeReferences() {
@@ -144,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, -DAYS_IN_WEEK);
                 currentLastWeekDay.add(Calendar.DAY_OF_WEEK, -DAYS_IN_WEEK);
                 setCurrentWeekLabel();
+                initializeData();
             }
         });
 
@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, DAYS_IN_WEEK);
                 currentLastWeekDay.add(Calendar.DAY_OF_WEEK, DAYS_IN_WEEK);
                 setCurrentWeekLabel();
+                initializeData();
             }
         });
     }
