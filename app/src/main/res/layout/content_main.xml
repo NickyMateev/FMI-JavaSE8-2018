@@ -65,19 +65,34 @@
                 android:layout_width="278dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/carrois_gothic"
                 android:paddingLeft="10dp"
+                android:gravity="right|center_vertical"
+                android:fontFamily="@font/carrois_gothic"
                 android:text="Daily calories:"
-                android:textAlignment="textEnd"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/btnDailyCal"
+                android:layout_width="64dp"
+                android:layout_height="22dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginRight="5pt"
+                android:background="@android:color/background_light"
+                android:fontFamily="@font/carrois_gothic"
+                android:text="2700"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+<!--
             <EditText
                 android:id="@+id/dailyCal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/btn_bkg"
                 android:fontFamily="@font/carrois_gothic"
                 android:hint="calories"
                 android:inputType="numberSigned"
@@ -85,6 +100,7 @@
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="15sp" />
+                -->
 
         </LinearLayout>
 
@@ -488,9 +504,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3pt"
-            android:max="10"
-            android:progress="3"
             android:background="@drawable/border"
+            android:max="17000"
+            android:progress="16043"
             android:progressDrawable="@drawable/custom_progress_bar" />
     </LinearLayout>
 

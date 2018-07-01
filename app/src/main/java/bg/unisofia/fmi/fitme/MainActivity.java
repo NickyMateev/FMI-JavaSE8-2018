@@ -4,13 +4,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeWeeklyData() {
-        EditText dailyCal = (EditText) findViewById(R.id.dailyCal);
+        Button dailyCal = (Button) findViewById(R.id.btnDailyCal);
         dailyCalorieGoal = Integer.parseInt(dailyCal.getText().toString());
         weeklyCalorieGoal = 7 * dailyCalorieGoal;
 
@@ -205,14 +208,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void attachCalorieListeners() {
-        EditText dailyCal = (EditText) findViewById(R.id.dailyCal);
-        dailyCal.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        final Button btnDailyCal = (Button) findViewById(R.id.btnDailyCal);
+        btnDailyCal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View mView = getLayoutInflater().inflate(R.layout.daily_popup, null);
+                final EditText dailyCalInput = (EditText) mView.findViewById(R.id.dailyCalInput);
+                Button btnUpdate = (Button) mView.findViewById(R.id.btnUpdateGoal);
+
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+
+                btnUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!dailyCalInput.getText().toString().isEmpty()) {
+                            Toast.makeText(MainActivity.this,
+                                    R.string.success_update_msg,
+                                    Toast.LENGTH_LONG).show();
+                            btnDailyCal.setText(dailyCalInput.getText());
+                            refreshCalorieGoals();
+                            setupProgressBar();
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(MainActivity.this,
+                                    R.string.error_update_msg,
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+                dialog.show();
+            }
+        });
+        /*
+        btnDailyCal.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 refreshCalorieGoals();
                 setupProgressBar();
             }
         });
+        */
 
         final EditText mondayCalorieText = (EditText)findViewById(R.id.mondayCalories);
         mondayCalorieText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -279,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void refreshCalorieGoals() {
-        EditText dailyCal = (EditText) findViewById(R.id.dailyCal);
+        Button dailyCal = (Button) findViewById(R.id.btnDailyCal);
         dailyCalorieGoal = Integer.parseInt(dailyCal.getText().toString());
         weeklyCalorieGoal = 7 * dailyCalorieGoal;
     }

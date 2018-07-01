@@ -3,4 +3,10 @@
     <string name="title_activity_main">FitMe</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="daily_goal_popup_label">Daily goal</string>
+    <string name="daily_calories_label">Daily calories:</string>
+    <string name="cal_hint">cal</string>
+    <string name="update_goal_label">Update</string>
+    <string name="success_update_msg">Successfuly updated daily goals!</string>
+    <string name="error_update_msg">Please fill any empty fields.</string>
 </resources>
