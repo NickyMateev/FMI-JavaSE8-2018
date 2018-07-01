@@ -87,7 +87,6 @@
                 android:layout_weight="1"
                 android:background="@android:color/background_light"
                 android:fontFamily="@font/carrois_gothic"
-                android:text="0"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="15sp" />
@@ -168,7 +167,6 @@
                     android:gravity="center"
                     android:hint="kg / lbs"
                     android:inputType="numberDecimal"
-                    android:text="0"
                     android:textColor="#000000"
                     android:textSize="14sp" />
 

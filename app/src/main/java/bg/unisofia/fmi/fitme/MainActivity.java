@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,12 +13,25 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orm.SugarRecord;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
+import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.models.Day;
 import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.models.Week;
+import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static Calendar currentFirstWeekDay;
+    private static Calendar currentLastWeekDay;
+
+    private static Week currentWeek;
 
     private static int dailyCalorieGoal;
     private static int weeklyCalorieGoal;
@@ -41,63 +55,43 @@ public class MainActivity extends AppCompatActivity {
 
         initializeReferences();
         setSupportActionBar(toolbar);
+        drawProgressBar();
         attachHandlers();
 
-        // Current week setup:
-        String weekStartDate = getMonthDayString(getWeekStartDate());
-        String weekEndDate = getMonthDayString(getWeekEndDate());
-        currentWeekLabel.setText(weekStartDate + " - " + weekEndDate);
+        dailyCalorieGoalBtn.setText("123");
+        currentFirstWeekDay = Utils.getCurrentWeekStartDate();
+        currentLastWeekDay = (Calendar)currentFirstWeekDay.clone();
+        currentLastWeekDay.add(Calendar.DAY_OF_WEEK, 6);
+        setCurrentWeekLabel();
 
-        // Progress bar setup:
-        Drawable draw = getResources().getDrawable(R.drawable.custom_progress_bar);
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setProgressDrawable(draw);
-
-        dailyCalorieGoal = -123;
+        initializeData();
         initializeWeeklyData();
     }
 
-    private Calendar getWeekStartDate() {
-        Calendar calendar = Calendar.getInstance(Locale.getDefault());
-        while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-            calendar.add(Calendar.DATE, -1);
+
+    private void initializeData() {
+        List<Week> result = Week.find(Week.class, "start_date = ?", new String(currentFirstWeekDay.getTime().toString()));
+
+        if (result == null || result.size() == 0) {
+            currentWeek = new Week(currentFirstWeekDay.getTime().toString(), currentLastWeekDay.getTime().toString(), 0);
+            currentWeek.save();
+        } else {
+            currentWeek = result.get(0);
+            dailyCalorieGoalBtn.setText(String.valueOf(currentWeek.getDailyCalories()));
+            List<Day> weekDays = currentWeek.getDays();
+            for (Day day : weekDays) {
+                weightEntries[day.getDayOfWeek() - 1] = day.getWeight();
+                calorieEntries[day.getDayOfWeek() - 1] = day.getCalories();
+            }
         }
 
-        return calendar;
-    }
-
-    private Calendar getWeekEndDate() {
-        Calendar calendar = Calendar.getInstance(Locale.getDefault());
-        while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-            calendar.add(Calendar.DATE, 1);
+        Iterator<Week> weeks = Week.findAll(Week.class);
+        while(weeks.hasNext()) {
+            System.out.println(weeks.next());
         }
-        calendar.add(Calendar.DATE, -1);
-        return calendar;
-    }
 
-    private String getMonthDayString(Calendar calendar) {
-        int monthNumber = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
-        return getMonthName(monthNumber) + " " + dayOfMonth;
-    }
-
-    private String getMonthName(int monthNumber) {
-        switch (monthNumber) {
-            case 0: return "Jan";
-            case 1: return "Feb";
-            case 2: return "Mar";
-            case 3: return "Apr";
-            case 4: return "May";
-            case 5: return "Jun";
-            case 6: return "Jul";
-            case 7: return "Aug";
-            case 8: return "Sep";
-            case 9: return "Oct";
-            case 10: return "Nov";
-            case 11: return "Dec";
-            default: return "???";
-        }
+        System.out.println(">>> Weeks: " + Week.count(Week.class));
+        System.out.println(">>> Days: " + Day.count( Day.class));
     }
 
     private void refreshCalorieGoalData() {
@@ -106,31 +100,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void refreshProgressBar() {
-        int totalCalories = calculateCalorieEntryTotal();
+        int totalCalories = Utils.calculateCalorieEntryTotal(calorieEntries);
         progressBarProportion.setText(totalCalories + " / " +  weeklyCalorieGoal);
         progressBar.setProgress(totalCalories);
         progressBar.setMax(weeklyCalorieGoal);
-    }
-
-    private int calculateCalorieEntryTotal() {
-        int totalCalories = 0;
-        for (int dailyCalories : calorieEntries) {
-            totalCalories += dailyCalories;
-        }
-        return totalCalories;
-    }
-
-    private double calculateAverageWeight() {
-        double totalWeight = 0.0;
-        int validEntries = 0;
-        for (double dailyWeight : weightEntries) {
-            if (dailyWeight > 0) {
-                totalWeight += dailyWeight;
-                validEntries++;
-            }
-        }
-
-        return validEntries > 0 ? (totalWeight / validEntries) : 0.0;
     }
 
     private void initializeReferences() {
@@ -164,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeWeeklyData() {
-        dailyCalorieGoalBtn.setText(String.valueOf(dailyCalorieGoal));
+        /* dailyCalorieGoalBtn.setText(String.valueOf(dailyCalorieGoal));
 
         calorieEntries[0] = Integer.parseInt(mondayCalories.getText().toString());
         calorieEntries[1] = Integer.parseInt(tuesdayCalories.getText().toString());
@@ -181,10 +154,11 @@ public class MainActivity extends AppCompatActivity {
         weightEntries[4] = Double.parseDouble(fridayWeight.getText().toString());
         weightEntries[5] = Double.parseDouble(saturdayWeight.getText().toString());
         weightEntries[6] = Double.parseDouble(sundayWeight.getText().toString());
+        */
 
-        avgWeight.setText(String.format("%.2f", calculateAverageWeight()));
+        avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
 
-        weeklyCalorieGoal = 7 * dailyCalorieGoal;
+        weeklyCalorieGoal = 7 * currentWeek.getDailyCalories();
         refreshProgressBar();
     }
 
@@ -198,7 +172,18 @@ public class MainActivity extends AppCompatActivity {
         previousWeekBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO:
+                currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, -7);
+                currentLastWeekDay.add(Calendar.DAY_OF_WEEK, -7);
+                setCurrentWeekLabel();
+            }
+        });
+
+        nextWeekBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, 7);
+                currentLastWeekDay.add(Calendar.DAY_OF_WEEK, 7);
+                setCurrentWeekLabel();
             }
         });
     }
@@ -208,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 weightEntries[0] = Double.parseDouble(mondayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", calculateAverageWeight()));
+                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
             }
         });
 
@@ -216,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 weightEntries[1] = Double.parseDouble(tuesdayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", calculateAverageWeight()));
+                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
             }
         });
 
@@ -224,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 weightEntries[2] = Double.parseDouble(wednesdayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", calculateAverageWeight()));
+                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
             }
         });
 
@@ -232,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 weightEntries[3] = Double.parseDouble(thursdayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", calculateAverageWeight()));
+                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
             }
         });
 
@@ -240,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 weightEntries[4] = Double.parseDouble(fridayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", calculateAverageWeight()));
+                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
             }
         });
 
@@ -248,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 weightEntries[5] = Double.parseDouble(saturdayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", calculateAverageWeight()));
+                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
             }
         });
 
@@ -256,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 weightEntries[6] = Double.parseDouble(sundayWeight.getText().toString());
-                avgWeight.setText(String.format("%.2f", calculateAverageWeight()));
+                avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(weightEntries)));
             }
         });
     }
@@ -276,11 +261,18 @@ public class MainActivity extends AppCompatActivity {
                 btnUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (!dailyCalInput.getText().toString().isEmpty()) {
+                        Editable e = dailyCalInput.getText();
+                        if (!e.toString().isEmpty()) {
                             Toast.makeText(MainActivity.this,
                                     R.string.success_update_msg,
                                     Toast.LENGTH_LONG).show();
-                            dailyCalorieGoalBtn.setText(dailyCalInput.getText());
+                            int dailyCalories = Integer.parseInt(e.toString());
+                            currentWeek.setDailyCalories(dailyCalories);
+                            currentWeek.save();
+
+                            System.out.println(Week.findById(Week.class, 1));
+
+                            dailyCalorieGoalBtn.setText(e);
                             refreshCalorieGoalData();
                             refreshProgressBar();
                             dialog.dismiss();
@@ -353,4 +345,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void setCurrentWeekLabel() {
+        String currWeekLabel = Utils.constructCurrentWeekLabel(currentFirstWeekDay, currentLastWeekDay);
+        currentWeekLabel.setText(currWeekLabel);
+    }
+
+    private void drawProgressBar() {
+        Drawable draw = getResources().getDrawable(R.drawable.custom_progress_bar);
+        progressBar.setProgressDrawable(draw);
+    }
 }

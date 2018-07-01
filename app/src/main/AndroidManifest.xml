@@ -6,6 +6,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/fitme_logo"
         android:label="@string/app_name"
+        android:name="com.orm.SugarApp"
         android:roundIcon="@mipmap/fitme_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">

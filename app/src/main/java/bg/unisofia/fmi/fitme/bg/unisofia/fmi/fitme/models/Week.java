@@ -1,52 +1,59 @@
 package bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.models;
 
+import com.orm.SugarRecord;
+
 import java.util.Date;
+import java.util.List;
 
-public class Week {
+public class Week extends SugarRecord {
 
-    private int _id;
-    private Date _startDate;
-    private Date _endDate;
-    private int _dailyCalorieGoal;
+    private String startDate;
+    private String endDate;
+    private int dailyCalories;
 
     public Week() {
     }
 
-    public Week(Date startDate, Date endDate, int dailyCalorieGoal) {
-        this._startDate = startDate;
-        this._endDate = endDate;
-        this._dailyCalorieGoal = dailyCalorieGoal;
+    public Week(String startDate, String endDate, int dailyCalories) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.dailyCalories = dailyCalories;
     }
 
-    public int get_id() {
-        return _id;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void set_id(int _id) {
-        this._id = _id;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
-    public Date get_startDate() {
-        return _startDate;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void set_startDate(Date _startDate) {
-        this._startDate = _startDate;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
-    public Date get_endDate() {
-        return _endDate;
+    public int getDailyCalories() {
+        return dailyCalories;
     }
 
-    public void set_endDate(Date _endDate) {
-        this._endDate = _endDate;
+    public void setDailyCalories(int dailyCalories) {
+        this.dailyCalories = dailyCalories;
     }
 
-    public int get_dailyCalorieGoal() {
-        return _dailyCalorieGoal;
+    public List<Day> getDays(){
+        return Day.find(Day.class, "week = ?", String.valueOf(this.getId()));
     }
 
-    public void set_dailyCalorieGoal(int _dailyCalorieGoal) {
-        this._dailyCalorieGoal = _dailyCalorieGoal;
+    @Override
+    public String toString() {
+        return "Week{" +
+                "startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", dailyCalories=" + dailyCalories +
+                '}';
     }
 }
