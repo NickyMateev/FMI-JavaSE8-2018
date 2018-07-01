@@ -448,6 +448,7 @@
             android:layout_margin="3pt"
             android:max="10"
             android:progress="3"
+            android:background="@drawable/border"
             android:progressDrawable="@drawable/custom_progress_bar" />
     </LinearLayout>
 
