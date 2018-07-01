@@ -1,7 +1,10 @@
 package bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.utils;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
+
+import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.models.Day;
 
 public class Utils {
 
@@ -39,18 +42,20 @@ public class Utils {
         return getMonthName(monthNumber) + " " + dayOfMonth;
     }
 
-    public static int calculateCalorieEntryTotal(int[] calorieEntries) {
+    public static int calculateCalorieEntryTotal(List<Day> days) {
         int totalCalories = 0;
-        for (int dailyCalories : calorieEntries) {
-            totalCalories += dailyCalories;
+        for (Day day : days) {
+            totalCalories += day.getCalories();
         }
         return totalCalories;
     }
 
-    public static double calculateAverageWeight(double[] weightEntries) {
+    public static double calculateAverageWeight(List<Day> days) {
         double totalWeight = 0.0;
         int validEntries = 0;
-        for (double dailyWeight : weightEntries) {
+
+        for (Day day : days) {
+            double dailyWeight = day.getWeight();
             if (dailyWeight > 0) {
                 totalWeight += dailyWeight;
                 validEntries++;
