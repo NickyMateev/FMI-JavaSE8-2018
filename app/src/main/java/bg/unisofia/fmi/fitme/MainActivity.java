@@ -242,15 +242,6 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-        /*
-        btnDailyCal.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                refreshCalorieGoals();
-                setupProgressBar();
-            }
-        });
-        */
 
         final EditText mondayCalorieText = (EditText)findViewById(R.id.mondayCalories);
         mondayCalorieText.setOnFocusChangeListener(new View.OnFocusChangeListener() {

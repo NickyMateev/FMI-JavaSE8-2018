@@ -453,6 +453,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="4dp"
         android:background="@drawable/border"
         android:orientation="vertical">
 
@@ -493,7 +494,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/carrois_gothic"
                 android:text="16043/17000"
-                android:textAlignment="textEnd"
+                android:gravity="right"
                 android:textColor="#000000"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -503,7 +504,7 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="3pt"
+            android:layout_margin="5pt"
             android:background="@drawable/border"
             android:max="17000"
             android:progress="16043"
