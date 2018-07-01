@@ -17,19 +17,22 @@
         android:background="@drawable/border"
         android:orientation="horizontal">
 
-        <ImageView
+        <Button
             android:id="@+id/previousWeekBtn"
             android:layout_width="wrap_content"
             android:layout_height="18dp"
             android:layout_weight="1"
+            android:layout_marginLeft="15dp"
+            android:paddingLeft="4dp"
             android:layout_gravity="center"
-            android:tint="#A0A0A0"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24px" />
+            android:background="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_baseline_arrow_back_ios_24px" />
 
         <TextView
             android:id="@+id/weekText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:width="350dp"
             android:gravity="center"
             android:layout_weight="1"
             android:fontFamily="@font/carrois_gothic"
@@ -39,14 +42,16 @@
             android:textSize="20sp"
             tools:text="Current Week" />
 
-        <ImageView
+        <Button
             android:id="@+id/nextWeekBtn"
             android:layout_width="wrap_content"
             android:layout_height="18dp"
             android:layout_weight="1"
+            android:layout_marginRight="15dp"
+            android:paddingLeft="3dp"
             android:layout_gravity="center"
-            android:tint="#A0A0A0"
-            app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24px" />
+            android:background="@color/colorWhite"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24px" />
     </LinearLayout>
 
     <LinearLayout
@@ -86,22 +91,6 @@
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="15sp" />
-<!--
-            <EditText
-                android:id="@+id/dailyCal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/btn_bkg"
-                android:fontFamily="@font/carrois_gothic"
-                android:hint="calories"
-                android:inputType="numberSigned"
-                android:text="2700"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="15sp" />
-                -->
-
         </LinearLayout>
 
     </LinearLayout>
