@@ -16,7 +16,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.models.Week;
-import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.persistency.MyDBHandler;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private static int[] calorieEntries = new int[7];
     private static double[] weightEntries = new double[7];
 
-    private static MyDBHandler db;
 
+    Toolbar toolbar;
     private static TextView currentWeekLabel, avgWeight, progressBarProportion;
     Button previousWeekBtn, nextWeekBtn;
     Button dailyCalorieGoalBtn;
@@ -40,26 +39,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        db = new MyDBHandler(this, null, null, 1);
         initializeReferences();
+        setSupportActionBar(toolbar);
+        attachHandlers();
 
         // Current week setup:
         String weekStartDate = getMonthDayString(getWeekStartDate());
         String weekEndDate = getMonthDayString(getWeekEndDate());
         currentWeekLabel.setText(weekStartDate + " - " + weekEndDate);
 
-        dailyCalorieGoal = db.getDailyCaloriesForWeek(getWeekStartDate().getTime(), getWeekEndDate().getTime());
-        initializeWeeklyData();
-        attachHandlers();
-
         // Progress bar setup:
         Drawable draw = getResources().getDrawable(R.drawable.custom_progress_bar);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setProgressDrawable(draw);
 
+        dailyCalorieGoal = -123;
+        initializeWeeklyData();
     }
 
     private Calendar getWeekStartDate() {
@@ -103,6 +98,69 @@ public class MainActivity extends AppCompatActivity {
             case 11: return "Dec";
             default: return "???";
         }
+    }
+
+    private void refreshCalorieGoalData() {
+        dailyCalorieGoal = Integer.parseInt(dailyCalorieGoalBtn.getText().toString());
+        weeklyCalorieGoal = 7 * dailyCalorieGoal;
+    }
+
+    private void refreshProgressBar() {
+        int totalCalories = calculateCalorieEntryTotal();
+        progressBarProportion.setText(totalCalories + " / " +  weeklyCalorieGoal);
+        progressBar.setProgress(totalCalories);
+        progressBar.setMax(weeklyCalorieGoal);
+    }
+
+    private int calculateCalorieEntryTotal() {
+        int totalCalories = 0;
+        for (int dailyCalories : calorieEntries) {
+            totalCalories += dailyCalories;
+        }
+        return totalCalories;
+    }
+
+    private double calculateAverageWeight() {
+        double totalWeight = 0.0;
+        int validEntries = 0;
+        for (double dailyWeight : weightEntries) {
+            if (dailyWeight > 0) {
+                totalWeight += dailyWeight;
+                validEntries++;
+            }
+        }
+
+        return validEntries > 0 ? (totalWeight / validEntries) : 0.0;
+    }
+
+    private void initializeReferences() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        currentWeekLabel = (TextView) findViewById(R.id.weekText);
+
+        previousWeekBtn = (Button) findViewById(R.id.previousWeekBtn);
+        nextWeekBtn = (Button) findViewById(R.id.nextWeekBtn);
+
+        avgWeight = (TextView) findViewById(R.id.avgWeight);
+        dailyCalorieGoalBtn = (Button) findViewById(R.id.btnDailyCal);
+
+        mondayCalories = (EditText) findViewById(R.id.mondayCalories);
+        tuesdayCalories = (EditText) findViewById(R.id.tuesdayCalories);
+        wednesdayCalories = (EditText) findViewById(R.id.wednesdayCalories);
+        thursdayCalories = (EditText) findViewById(R.id.thursdayCalories);
+        fridayCalories = (EditText) findViewById(R.id.fridayCalories);
+        saturdayCalories = (EditText) findViewById(R.id.saturdayCalories);
+        sundayCalories = (EditText) findViewById(R.id.sundayCalories);
+
+        mondayWeight = (EditText) findViewById(R.id.mondayWeight);
+        tuesdayWeight = (EditText) findViewById(R.id.tuesdayWeight);
+        wednesdayWeight = (EditText) findViewById(R.id.wednesdayWeight);
+        thursdayWeight = (EditText) findViewById(R.id.thursdayWeight);
+        fridayWeight = (EditText) findViewById(R.id.fridayWeight);
+        saturdayWeight = (EditText) findViewById(R.id.saturdayWeight);
+        sundayWeight = (EditText) findViewById(R.id.sundayWeight);
+
+        progressBarProportion = (TextView) findViewById(R.id.progressBarProportion);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
     }
 
     private void initializeWeeklyData() {
@@ -223,7 +281,6 @@ public class MainActivity extends AppCompatActivity {
                                     R.string.success_update_msg,
                                     Toast.LENGTH_LONG).show();
                             dailyCalorieGoalBtn.setText(dailyCalInput.getText());
-                            updateGoalCaloriesInDB(Integer.parseInt(dailyCalInput.getText().toString()));
                             refreshCalorieGoalData();
                             refreshProgressBar();
                             dialog.dismiss();
@@ -296,69 +353,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updateGoalCaloriesInDB(int dailyCalorieGoal) {
-        db.updateDailyCaloriesGoalForWeek(new Week(getWeekStartDate().getTime(), getWeekEndDate().getTime(), dailyCalorieGoal));
-    }
-
-    private void refreshCalorieGoalData() {
-        dailyCalorieGoal = Integer.parseInt(dailyCalorieGoalBtn.getText().toString());
-        weeklyCalorieGoal = 7 * dailyCalorieGoal;
-    }
-
-    private void refreshProgressBar() {
-        int totalCalories = calculateCalorieEntryTotal();
-        progressBarProportion.setText(totalCalories + " / " +  weeklyCalorieGoal);
-        progressBar.setProgress(totalCalories);
-        progressBar.setMax(weeklyCalorieGoal);
-    }
-
-    private int calculateCalorieEntryTotal() {
-        int totalCalories = 0;
-        for (int dailyCalories : calorieEntries) {
-            totalCalories += dailyCalories;
-        }
-        return totalCalories;
-    }
-
-    private double calculateAverageWeight() {
-        double totalWeight = 0.0;
-        int validEntries = 0;
-        for (double dailyWeight : weightEntries) {
-            if (dailyWeight > 0) {
-                totalWeight += dailyWeight;
-                validEntries++;
-            }
-        }
-
-        return validEntries > 0 ? (totalWeight / validEntries) : 0.0;
-    }
-
-    private void initializeReferences() {
-        currentWeekLabel = (TextView) findViewById(R.id.weekText);
-
-        previousWeekBtn = (Button) findViewById(R.id.previousWeekBtn);
-        nextWeekBtn = (Button) findViewById(R.id.nextWeekBtn);
-
-        avgWeight = (TextView) findViewById(R.id.avgWeight);
-        dailyCalorieGoalBtn = (Button) findViewById(R.id.btnDailyCal);
-
-        mondayCalories = (EditText) findViewById(R.id.mondayCalories);
-        tuesdayCalories = (EditText) findViewById(R.id.tuesdayCalories);
-        wednesdayCalories = (EditText) findViewById(R.id.wednesdayCalories);
-        thursdayCalories = (EditText) findViewById(R.id.thursdayCalories);
-        fridayCalories = (EditText) findViewById(R.id.fridayCalories);
-        saturdayCalories = (EditText) findViewById(R.id.saturdayCalories);
-        sundayCalories = (EditText) findViewById(R.id.sundayCalories);
-
-        mondayWeight = (EditText) findViewById(R.id.mondayWeight);
-        tuesdayWeight = (EditText) findViewById(R.id.tuesdayWeight);
-        wednesdayWeight = (EditText) findViewById(R.id.wednesdayWeight);
-        thursdayWeight = (EditText) findViewById(R.id.thursdayWeight);
-        fridayWeight = (EditText) findViewById(R.id.fridayWeight);
-        saturdayWeight = (EditText) findViewById(R.id.saturdayWeight);
-        sundayWeight = (EditText) findViewById(R.id.sundayWeight);
-
-        progressBarProportion = (TextView) findViewById(R.id.progressBarProportion);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-    }
 }
