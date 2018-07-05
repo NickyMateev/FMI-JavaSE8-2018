@@ -6,6 +6,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initializeReferences();
-        setSupportActionBar(toolbar);
+        initializeToolbar();
         drawProgressBar();
         attachHandlers();
 
@@ -59,6 +61,28 @@ public class MainActivity extends AppCompatActivity {
         initializeData();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+               break;
+            case R.id.delete:
+                break;
+            case R.id.settings:
+                break;
+            case R.id.exit:
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void initializeData() {
         List<Week> result = Week.find(Week.class, "start_date = ?", new String(currentFirstWeekDay.getTime().toString()));
@@ -84,6 +108,12 @@ public class MainActivity extends AppCompatActivity {
 
         avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(currentWeekDays)));
         refreshProgressBar();
+    }
+
+    private void initializeToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        toolbar.setLogo(R.mipmap.fitme_logo);
     }
 
     private void refreshProgressBar() {
