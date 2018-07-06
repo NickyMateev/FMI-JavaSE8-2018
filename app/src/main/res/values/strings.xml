@@ -9,4 +9,5 @@
     <string name="update_goal_label">Update</string>
     <string name="success_update_msg">Successfuly updated daily goals!</string>
     <string name="error_update_msg">Please fill any empty fields.</string>
+    <string name="success_week_clean_up_msg">Successfully cleaned up week.</string>
 </resources>

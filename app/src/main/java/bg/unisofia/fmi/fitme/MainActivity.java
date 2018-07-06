@@ -73,15 +73,45 @@ public class MainActivity extends AppCompatActivity {
             case R.id.search:
                break;
             case R.id.delete:
+                onDeletePress();
                 break;
             case R.id.settings:
+                onSettingsPress();
                 break;
             case R.id.exit:
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
+                onExitPress();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onSettingsPress() {
+    }
+
+    private void onDeletePress() {
+        currentWeek.setDailyCalories(0);
+        for (Day day : currentWeekDays) {
+            day.setWeight(0);
+            day.setCalories(0);
+            day.save();
+            for (int i = 0; i < DAYS_IN_WEEK; i++) {
+                weightFields[i].setText("0");
+                calorieFields[i].setText("0");
+                refreshAverageWeight();
+            }
+        }
+        currentWeek.save();
+        dailyCalorieGoalBtn.setText("0");
+        refreshProgressBar();
+
+        Toast.makeText(MainActivity.this,
+                R.string.success_week_clean_up_msg,
+                Toast.LENGTH_LONG).show();
+    }
+
+    private void onExitPress() {
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
     }
 
     private void initializeData() {
@@ -106,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(currentWeekDays)));
+        refreshAverageWeight();
         refreshProgressBar();
     }
 
@@ -116,10 +146,16 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setLogo(R.mipmap.fitme_logo);
     }
 
+    private void refreshAverageWeight() {
+        avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(currentWeekDays)));
+    }
+
     private void refreshProgressBar() {
         int totalCalories = Utils.calculateCalorieEntryTotal(currentWeekDays);
         int weeklyCalories = currentWeek.getDailyCalories() * DAYS_IN_WEEK;
 
+        System.out.println("total calories: " + totalCalories);
+        System.out.println("total calories: " + weeklyCalories);
         progressBarProportion.setText(totalCalories + " / " + weeklyCalories);
         progressBar.setMax(weeklyCalories);
         progressBar.setProgress(totalCalories);
@@ -196,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                     Day day = currentWeekDays.get(j);
                     day.setWeight(weight);
                     day.save();
-                    avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(currentWeekDays)));
+                    refreshAverageWeight();
                 }
             });
         }
@@ -268,4 +304,5 @@ public class MainActivity extends AppCompatActivity {
         Drawable draw = getResources().getDrawable(R.drawable.custom_progress_bar);
         progressBar.setProgressDrawable(draw);
     }
+
 }
