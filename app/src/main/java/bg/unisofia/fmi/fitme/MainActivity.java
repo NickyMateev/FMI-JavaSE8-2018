@@ -1,5 +1,6 @@
 package bg.unisofia.fmi.fitme;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -86,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onSettingsPress() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     private void onDeletePress() {
