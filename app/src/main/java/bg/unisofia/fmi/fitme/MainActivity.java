@@ -157,8 +157,6 @@ public class MainActivity extends AppCompatActivity {
         int totalCalories = Utils.calculateCalorieEntryTotal(currentWeekDays);
         int weeklyCalories = currentWeek.getDailyCalories() * DAYS_IN_WEEK;
 
-        System.out.println("total calories: " + totalCalories);
-        System.out.println("total calories: " + weeklyCalories);
         progressBarProportion.setText(totalCalories + " / " + weeklyCalories);
         progressBar.setMax(weeklyCalories);
         progressBar.setProgress(totalCalories);
