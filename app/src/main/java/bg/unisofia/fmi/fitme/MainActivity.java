@@ -3,12 +3,15 @@ package bg.unisofia.fmi.fitme;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.gestures.SidewaySwipe;
 import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.models.Day;
 import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.models.Week;
 import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.utils.Utils;
@@ -28,21 +32,23 @@ public class MainActivity extends AppCompatActivity {
 
     private static int DAYS_IN_WEEK = 7;
 
+    private static GestureDetectorCompat gestureDetector;
+
     private static Calendar currentFirstWeekDay;
     private static Calendar currentLastWeekDay;
 
     private static Week currentWeek;
     private static List<Day> currentWeekDays;
 
-    EditText[] weightFields = new EditText[DAYS_IN_WEEK];
-    EditText[] calorieFields = new EditText[DAYS_IN_WEEK];
+    private static EditText[] weightFields = new EditText[DAYS_IN_WEEK];
+    private static EditText[] calorieFields = new EditText[DAYS_IN_WEEK];
 
-    Toolbar toolbar;
-    TextView currentWeekLabel, avgWeight, progressBarProportion, progressBarText;
-    Button previousWeekBtn, nextWeekBtn;
-    Button dailyCalorieGoalBtn;
+    private static Toolbar toolbar;
+    private static TextView currentWeekLabel, avgWeight, progressBarProportion, progressBarText;
+    private static Button previousWeekBtn, nextWeekBtn;
+    private static Button dailyCalorieGoalBtn;
 
-    ProgressBar progressBar;
+    private static ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         System.exit(1);
     }
 
-    private void initializeData() {
+    private static void initializeData() {
         List<Week> result = Week.find(Week.class, "start_date = ?", new String(currentFirstWeekDay.getTime().toString()));
 
         if (result == null || result.size() == 0) {
@@ -173,11 +179,11 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setLogo(R.mipmap.fitme_logo);
     }
 
-    private void refreshAverageWeight() {
+    private static void refreshAverageWeight() {
         avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(currentWeekDays)));
     }
 
-    private void refreshProgressBar() {
+    private static void refreshProgressBar() {
         int totalCalories = Utils.calculateCalorieEntryTotal(currentWeekDays);
         int weeklyCalories = currentWeek.getDailyCalories() * DAYS_IN_WEEK;
 
@@ -188,6 +194,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeReferences() {
+        gestureDetector = new GestureDetectorCompat(this, new SidewaySwipe());
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         currentWeekLabel = (TextView) findViewById(R.id.weekText);
 
@@ -229,20 +237,14 @@ public class MainActivity extends AppCompatActivity {
         previousWeekBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, -DAYS_IN_WEEK);
-                currentLastWeekDay.add(Calendar.DAY_OF_WEEK, -DAYS_IN_WEEK);
-                setCurrentWeekLabel();
-                initializeData();
+                loadPreviousWeek();
             }
         });
 
         nextWeekBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, DAYS_IN_WEEK);
-                currentLastWeekDay.add(Calendar.DAY_OF_WEEK, DAYS_IN_WEEK);
-                setCurrentWeekLabel();
-                initializeData();
+                loadNextWeek();
             }
         });
     }
@@ -322,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setCurrentWeekLabel() {
+    private static void setCurrentWeekLabel() {
         String currWeekLabel = Utils.constructCurrentWeekLabel(currentFirstWeekDay, currentLastWeekDay);
         currentWeekLabel.setText(currWeekLabel);
     }
@@ -332,4 +334,23 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setProgressDrawable(draw);
     }
 
+    public static void loadPreviousWeek() {
+        currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, -DAYS_IN_WEEK);
+        currentLastWeekDay.add(Calendar.DAY_OF_WEEK, -DAYS_IN_WEEK);
+        setCurrentWeekLabel();
+        initializeData();
+    }
+
+    public static void loadNextWeek() {
+        currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, DAYS_IN_WEEK);
+        currentLastWeekDay.add(Calendar.DAY_OF_WEEK, DAYS_IN_WEEK);
+        setCurrentWeekLabel();
+        initializeData();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        this.gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
 }
