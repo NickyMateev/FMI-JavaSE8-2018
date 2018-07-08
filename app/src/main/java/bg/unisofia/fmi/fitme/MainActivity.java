@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     EditText[] calorieFields = new EditText[DAYS_IN_WEEK];
 
     Toolbar toolbar;
-    TextView currentWeekLabel, avgWeight, progressBarProportion;
+    TextView currentWeekLabel, avgWeight, progressBarProportion, progressBarText;
     Button previousWeekBtn, nextWeekBtn;
     Button dailyCalorieGoalBtn;
 
@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
         progressBarProportion.setText(totalCalories + " / " + weeklyCalories);
         progressBar.setMax(weeklyCalories);
         progressBar.setProgress(totalCalories);
+        progressBarText.setText(weeklyCalories - totalCalories + " left");
     }
 
     private void initializeReferences() {
@@ -191,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
         progressBarProportion = (TextView) findViewById(R.id.progressBarProportion);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBarText = (TextView) findViewById(R.id.progressBarText);
     }
 
     private void attachHandlers() {
