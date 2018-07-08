@@ -9,6 +9,9 @@
     <string name="update_goal_label">Update</string>
     <string name="success_update_msg">Successfuly updated daily goals!</string>
     <string name="error_update_msg">Please fill any empty fields.</string>
+    <string name="clear_week_popup_label">Are you sure you want to clear this week\'s data?</string>
+    <string name="clear_week_confirm_btn_label">Clear week</string>
+    <string name="clear_week_cancel_btn_label">Cancel</string>
     <string name="success_week_clean_up_msg">Successfully cleaned up week.</string>
     <string name="title_activity_settings">Settings</string>
 

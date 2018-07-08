@@ -92,24 +92,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onDeletePress() {
-        currentWeek.setDailyCalories(0);
-        for (Day day : currentWeekDays) {
-            day.setWeight(0);
-            day.setCalories(0);
-            day.save();
-            for (int i = 0; i < DAYS_IN_WEEK; i++) {
-                weightFields[i].setText("0");
-                calorieFields[i].setText("0");
-                refreshAverageWeight();
-            }
-        }
-        currentWeek.save();
-        dailyCalorieGoalBtn.setText("0");
-        refreshProgressBar();
+        View mView = getLayoutInflater().inflate(R.layout.clear_week_popup, null);
+        Button confirmClearUpBtn = (Button) mView.findViewById(R.id.confirmClearUp);
+        Button cancelClearUpBtn = (Button) mView.findViewById(R.id.cancelClearUp);
 
-        Toast.makeText(MainActivity.this,
-                R.string.success_week_clean_up_msg,
-                Toast.LENGTH_LONG).show();
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+
+        confirmClearUpBtn.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 currentWeek.setDailyCalories(0);
+                 for (Day day : currentWeekDays) {
+                     day.setWeight(0);
+                     day.setCalories(0);
+                     day.save();
+                     for (int i = 0; i < DAYS_IN_WEEK; i++) {
+                         weightFields[i].setText("0");
+                         calorieFields[i].setText("0");
+                         refreshAverageWeight();
+                     }
+                 }
+                 currentWeek.save();
+                 dailyCalorieGoalBtn.setText("0");
+                 refreshProgressBar();
+
+                 Toast.makeText(MainActivity.this,
+                         R.string.success_week_clean_up_msg,
+                         Toast.LENGTH_LONG).show();
+
+                dialog.dismiss();
+            }
+        });
+
+        cancelClearUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     private void onExitPress() {
