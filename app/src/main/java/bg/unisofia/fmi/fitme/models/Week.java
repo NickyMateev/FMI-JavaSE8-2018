@@ -1,8 +1,7 @@
-package bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.models;
+package bg.unisofia.fmi.fitme.models;
 
 import com.orm.SugarRecord;
 
-import java.util.Date;
 import java.util.List;
 
 public class Week extends SugarRecord {

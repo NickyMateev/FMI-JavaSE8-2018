@@ -8,7 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,10 +22,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.gestures.SidewaySwipe;
-import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.models.Day;
-import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.models.Week;
-import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.utils.Utils;
+import bg.unisofia.fmi.fitme.errors.WeekNotFoundException;
+import bg.unisofia.fmi.fitme.gestures.SidewaySwipe;
+import bg.unisofia.fmi.fitme.models.Day;
+import bg.unisofia.fmi.fitme.models.Week;
+import bg.unisofia.fmi.fitme.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,17 +55,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initializeReferences();
+        bootstrapApplication();
+    }
+
+    private void bootstrapApplication() {
+        initializeSidewayGestureDetector();
+        initializeViewReferences();
         initializeToolbar();
         drawProgressBar();
         attachHandlers();
-
-        currentFirstWeekDay = Utils.getCurrentWeekStartDate();
-        currentLastWeekDay = (Calendar)currentFirstWeekDay.clone();
-        currentLastWeekDay.add(Calendar.DAY_OF_WEEK, 6);
-        setCurrentWeekLabel();
-
-        initializeData();
+        initializeCurrentWeek();
     }
 
     @Override
@@ -117,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                      for (int i = 0; i < DAYS_IN_WEEK; i++) {
                          weightFields[i].setText("0");
                          calorieFields[i].setText("0");
-                         refreshAverageWeight();
+                         refreshAvgWeightTextView();
                      }
                  }
                  currentWeek.save();
@@ -147,39 +146,7 @@ public class MainActivity extends AppCompatActivity {
         System.exit(1);
     }
 
-    private static void initializeData() {
-        List<Week> result = Week.find(Week.class, "start_date = ?", new String(currentFirstWeekDay.getTime().toString()));
-
-        if (result == null || result.size() == 0) {
-            currentWeek = new Week(currentFirstWeekDay.getTime().toString(), currentLastWeekDay.getTime().toString(), 0);
-            currentWeek.save();
-            currentWeekDays = new ArrayList<>();
-            for(int i = 0; i < DAYS_IN_WEEK; i ++) {
-                Day day = new Day(i, 0, 0, currentWeek);
-                day.save();
-                currentWeekDays.add(day);
-            }
-        } else {
-            currentWeek = result.get(0);
-            dailyCalorieGoalBtn.setText(String.valueOf(currentWeek.getDailyCalories()));
-            currentWeekDays = currentWeek.getDays();
-            for (Day day : currentWeekDays) {
-                weightFields[day.getDayOfWeek()].setText(day.getWeight() > 0 ? String.valueOf(day.getWeight()) : "");
-                calorieFields[day.getDayOfWeek()].setText(day.getCalories() > 0 ? String.valueOf(day.getCalories()) : "");
-            }
-        }
-
-        refreshAverageWeight();
-        refreshProgressBar();
-    }
-
-    private void initializeToolbar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        toolbar.setLogo(R.mipmap.fitme_logo);
-    }
-
-    private static void refreshAverageWeight() {
+    private static void refreshAvgWeightTextView() {
         avgWeight.setText(String.format("%.2f", Utils.calculateAverageWeight(currentWeekDays)));
     }
 
@@ -193,9 +160,11 @@ public class MainActivity extends AppCompatActivity {
         progressBarText.setText(weeklyCalories - totalCalories + " left");
     }
 
-    private void initializeReferences() {
+    private void initializeSidewayGestureDetector() {
         gestureDetector = new GestureDetectorCompat(this, new SidewaySwipe());
+    }
 
+    private void initializeViewReferences() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         currentWeekLabel = (TextView) findViewById(R.id.weekText);
 
@@ -225,6 +194,12 @@ public class MainActivity extends AppCompatActivity {
         progressBarProportion = (TextView) findViewById(R.id.progressBarProportion);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBarText = (TextView) findViewById(R.id.progressBarText);
+    }
+
+    private void initializeToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        toolbar.setLogo(R.mipmap.fitme_logo);
     }
 
     private void attachHandlers() {
@@ -261,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
                     Day day = currentWeekDays.get(j);
                     day.setWeight(weight);
                     day.save();
-                    refreshAverageWeight();
+                    refreshAvgWeightTextView();
                 }
             });
         }
@@ -324,28 +299,86 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private static void setCurrentWeekLabel() {
-        String currWeekLabel = Utils.constructCurrentWeekLabel(currentFirstWeekDay, currentLastWeekDay);
-        currentWeekLabel.setText(currWeekLabel);
-    }
-
     private void drawProgressBar() {
         Drawable draw = getResources().getDrawable(R.drawable.custom_progress_bar);
         progressBar.setProgressDrawable(draw);
     }
 
+    private void initializeCurrentWeek() {
+        determineCurrentWeek();
+        initializeWeek();
+    }
+
+    private static void initializeWeek() {
+        setWeekTextView();
+        loadWeekData();
+        refreshAvgWeightTextView();
+        refreshProgressBar();
+    }
+
+    private void determineCurrentWeek() {
+        currentFirstWeekDay = Utils.getCurrentWeekStartDate();
+        currentLastWeekDay = (Calendar)currentFirstWeekDay.clone();
+        currentLastWeekDay.add(Calendar.DAY_OF_WEEK, 6);
+    }
+
+    private static void setWeekTextView() {
+        String currWeekLabel = Utils.constructCurrentWeekLabel(currentFirstWeekDay, currentLastWeekDay);
+        currentWeekLabel.setText(currWeekLabel);
+    }
+
+    private static void loadWeekData() {
+        try {
+            currentWeek = retrieveCurrentWeekFromDB();
+            loadRetrievedWeekData();
+        } catch (WeekNotFoundException e) {
+            currentWeek = new Week(currentFirstWeekDay.getTime().toString(), currentLastWeekDay.getTime().toString(), 0);
+            currentWeek.save();
+            loadNewlyCreatedWeek();
+        }
+    }
+
+    private static Week retrieveCurrentWeekFromDB() throws WeekNotFoundException {
+        List<Week> result = Week.find(Week.class, "start_date = ?", new String(currentFirstWeekDay.getTime().toString()));
+
+        if (result.isEmpty()) {
+            throw new WeekNotFoundException("Unable to retrieve week");
+        }
+
+        return result.get(0);
+    }
+
+    private static void loadRetrievedWeekData() {
+        dailyCalorieGoalBtn.setText(String.valueOf(currentWeek.getDailyCalories()));
+        currentWeekDays = currentWeek.getDays();
+        for (Day day : currentWeekDays) {
+            weightFields[day.getDayOfWeek()].setText(day.getWeight() > 0 ? String.valueOf(day.getWeight()) : "");
+            calorieFields[day.getDayOfWeek()].setText(day.getCalories() > 0 ? String.valueOf(day.getCalories()) : "");
+        }
+    }
+
+    private static void loadNewlyCreatedWeek() {
+        currentWeekDays = new ArrayList<>();
+        for(int i = 0; i < DAYS_IN_WEEK; i ++) {
+            Day day = new Day(i, 0, 0, currentWeek);
+            day.save();
+            currentWeekDays.add(day);
+        }
+    }
+
     public static void loadPreviousWeek() {
-        currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, -DAYS_IN_WEEK);
-        currentLastWeekDay.add(Calendar.DAY_OF_WEEK, -DAYS_IN_WEEK);
-        setCurrentWeekLabel();
-        initializeData();
+        changeCurrentWeek(-1);
+        initializeWeek();
     }
 
     public static void loadNextWeek() {
-        currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, DAYS_IN_WEEK);
-        currentLastWeekDay.add(Calendar.DAY_OF_WEEK, DAYS_IN_WEEK);
-        setCurrentWeekLabel();
-        initializeData();
+        changeCurrentWeek(1);
+        initializeWeek();
+    }
+
+    private static void changeCurrentWeek(int weeksToAdd) {
+        currentFirstWeekDay.add(Calendar.DAY_OF_WEEK, weeksToAdd * DAYS_IN_WEEK);
+        currentLastWeekDay.add(Calendar.DAY_OF_WEEK, weeksToAdd * DAYS_IN_WEEK);
     }
 
     @Override

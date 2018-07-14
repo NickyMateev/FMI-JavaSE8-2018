@@ -1,10 +1,10 @@
-package bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.utils;
+package bg.unisofia.fmi.fitme.utils;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.models.Day;
+import bg.unisofia.fmi.fitme.models.Day;
 
 public class Utils {
 

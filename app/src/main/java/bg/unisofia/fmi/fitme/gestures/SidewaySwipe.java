@@ -1,4 +1,4 @@
-package bg.unisofia.fmi.fitme.bg.unisofia.fmi.fitme.gestures;
+package bg.unisofia.fmi.fitme.gestures;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
