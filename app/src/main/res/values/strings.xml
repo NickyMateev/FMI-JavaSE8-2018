@@ -13,6 +13,10 @@
     <string name="clear_week_confirm_btn_label">Clear week</string>
     <string name="clear_week_cancel_btn_label">Cancel</string>
     <string name="success_week_clean_up_msg">Successfully cleaned up week.</string>
+    <string name="weekly_activity_popup_title_label">Weekly activity</string>
+    <string name="weekly_activity_popup_workouts_label">Workouts</string>
+    <string name="weekly_activity_popup_steps_label">Average steps</string>
+    <string name="success_update_week_activity_msg">Successfuly updated weekly activity!</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->

@@ -502,24 +502,41 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/carrois_gothic"
-                    android:paddingLeft="7dp"
+                    android:paddingLeft="8dp"
+                    android:layout_marginRight="3dp"
                     android:text="Activity level:"
                     android:textAlignment="center"
                     android:textColor="#000000"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/avgSteps"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
+                <Button
+                    android:id="@+id/btnWeeklyWorkoutsActivity"
+                    android:layout_width="46dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/background_light"
+                    android:drawableRight="@drawable/ic_dumbbell"
                     android:fontFamily="@font/carrois_gothic"
-                    android:textAlignment="center"
-                    android:inputType="numberDecimal"
-                    android:textColor="#000000"
+                    android:hint="empty"
                     android:text="0"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp"/>
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btnWeeklyStepsActivity"
+                    android:layout_width="74dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:paddingLeft="3dp"
+                    android:background="@android:color/background_light"
+                    android:drawableRight="@drawable/ic_step"
+                    android:fontFamily="@font/carrois_gothic"
+                    android:hint="empty"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
             </LinearLayout>
 
 

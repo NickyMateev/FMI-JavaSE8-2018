@@ -13,7 +13,7 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:fontFamily="@font/carrois_gothic"
-        android:text="@string/daily_goal_popup_label" />
+        android:text="@string/weekly_activity_popup_title_label" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,25 +22,49 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/dailyCalPopupLabel"
+            android:id="@+id/weeklyActivityPopupWorkoutsLabel"
             android:layout_width="121dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/daily_calories_label" />
+            android:text="@string/weekly_activity_popup_workouts_label" />
 
         <EditText
-            android:id="@+id/dailyCalInput"
+            android:id="@+id/weeklyActivityWorkoutsInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="@string/cal_hint"
+            android:hint="# workouts"
             android:inputType="numberSigned"
-            android:drawableRight="@drawable/ic_fire"/>
+            android:drawableRight="@drawable/ic_dumbbell"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/weeklyActivityPopupStepsLabel"
+            android:layout_width="121dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/weekly_activity_popup_steps_label" />
+
+        <EditText
+            android:id="@+id/weeklyActivityStepsInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="# steps"
+            android:inputType="numberSigned"
+            android:drawableRight="@drawable/ic_step"/>
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnUpdateGoal"
+        android:id="@+id/btnUpdateWeeklyActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
