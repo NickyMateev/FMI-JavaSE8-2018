@@ -9,14 +9,16 @@ public class Week extends SugarRecord {
     private String startDate;
     private String endDate;
     private int dailyCalories;
+    private int avgSteps;
 
     public Week() {
     }
 
-    public Week(String startDate, String endDate, int dailyCalories) {
+    public Week(String startDate, String endDate, int dailyCalories, int avgSteps) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.dailyCalories = dailyCalories;
+        this.avgSteps = avgSteps;
     }
 
     public String getStartDate() {
@@ -43,6 +45,14 @@ public class Week extends SugarRecord {
         this.dailyCalories = dailyCalories;
     }
 
+    public int getAvgSteps() {
+        return avgSteps;
+    }
+
+    public void setAvgSteps(int avgSteps) {
+        this.avgSteps = avgSteps;
+    }
+
     public List<Day> getDays(){
         return Day.find(Day.class, "week = ?", String.valueOf(this.getId()));
     }
@@ -50,9 +60,10 @@ public class Week extends SugarRecord {
     @Override
     public String toString() {
         return "Week{" +
-                "startDate=" + startDate +
-                ", endDate=" + endDate +
+                "startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
                 ", dailyCalories=" + dailyCalories +
+                ", avgSteps=" + avgSteps +
                 '}';
     }
 }

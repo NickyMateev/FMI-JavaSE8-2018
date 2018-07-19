@@ -1,0 +1,1 @@
+-- Version 1: Initial SQL. No queries here due to the fact that Sugar ORM generates the database the first time

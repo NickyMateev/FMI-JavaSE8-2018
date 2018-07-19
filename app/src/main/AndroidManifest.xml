@@ -34,6 +34,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bg.unisofia.fmi.fitme.MainActivity" />
         </activity>
+        <meta-data android:name="VERSION" android:value="2" />
     </application>
 
 </manifest>

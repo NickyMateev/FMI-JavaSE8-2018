@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static EditText[] weightFields = new EditText[DAYS_IN_WEEK];
     private static EditText[] calorieFields = new EditText[DAYS_IN_WEEK];
+    private static EditText avgStepsField;
 
     private static Toolbar toolbar;
     private static TextView currentWeekLabel, avgWeight, progressBarProportion, progressBarText;
@@ -190,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
         calorieFields[5] = (EditText) findViewById(R.id.saturdayCalories);
         calorieFields[6] = (EditText) findViewById(R.id.sundayCalories);
 
+        avgStepsField = (EditText) findViewById(R.id.avgSteps);
 
         progressBarProportion = (TextView) findViewById(R.id.progressBarProportion);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -206,6 +208,19 @@ public class MainActivity extends AppCompatActivity {
         attachWeekNavigationListeners();
         attachWeightListeners();
         attachCalorieGoalListeners();
+        attachAvgStepsListener();
+    }
+
+    private void attachAvgStepsListener() {
+        avgStepsField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+               String avgStepsTextValue = avgStepsField.getText().toString();
+               int steps = !avgStepsTextValue.isEmpty() ?  Integer.parseInt(avgStepsTextValue) : 0;
+               currentWeek.setAvgSteps(steps);
+               currentWeek.save();
+            }
+        });
     }
 
     private void attachWeekNavigationListeners() {
@@ -231,8 +246,8 @@ public class MainActivity extends AppCompatActivity {
             weightFields[j].setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View view, boolean b) {
-                    String weightString = weightFields[j].getText().toString();
-                    double weight = !weightString.isEmpty() ? Double.parseDouble(weightString) : 0;
+                    String weightTextValue = weightFields[j].getText().toString();
+                    double weight = !weightTextValue.isEmpty() ? Double.parseDouble(weightTextValue) : 0;
                     Day day = currentWeekDays.get(j);
                     day.setWeight(weight);
                     day.save();
@@ -249,10 +264,10 @@ public class MainActivity extends AppCompatActivity {
             calorieFields[j].setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View view, boolean b) {
-                    String calories = calorieFields[j].getText().toString();
-                    if (!calories.isEmpty()) {
+                    String caloriesTextValue = calorieFields[j].getText().toString();
+                    if (!caloriesTextValue.isEmpty()) {
                         Day day = currentWeekDays.get(j);
-                        day.setCalories(Integer.parseInt(calories));
+                        day.setCalories(Integer.parseInt(caloriesTextValue));
                         day.save();
                         refreshProgressBar();
                     }
@@ -332,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
             currentWeek = retrieveCurrentWeekFromDB();
             loadRetrievedWeekData();
         } catch (WeekNotFoundException e) {
-            currentWeek = new Week(currentFirstWeekDay.getTime().toString(), currentLastWeekDay.getTime().toString(), 0);
+            currentWeek = new Week(currentFirstWeekDay.getTime().toString(), currentLastWeekDay.getTime().toString(), 0, 0);
             currentWeek.save();
             loadNewlyCreatedWeek();
         }
@@ -355,6 +370,7 @@ public class MainActivity extends AppCompatActivity {
             weightFields[day.getDayOfWeek()].setText(day.getWeight() > 0 ? String.valueOf(day.getWeight()) : "");
             calorieFields[day.getDayOfWeek()].setText(day.getCalories() > 0 ? String.valueOf(day.getCalories()) : "");
         }
+        avgStepsField.setText(String.valueOf(currentWeek.getAvgSteps()));
     }
 
     private static void loadNewlyCreatedWeek() {
