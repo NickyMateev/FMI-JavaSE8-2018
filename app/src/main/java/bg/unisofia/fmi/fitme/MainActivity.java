@@ -118,8 +118,11 @@ public class MainActivity extends AppCompatActivity {
                          refreshAvgWeightTextView();
                      }
                  }
+                 currentWeek.setNumberOfWorkouts(0);
+                 currentWeek.setAvgSteps(0);
                  currentWeek.save();
                  dailyCalorieGoalBtn.setText("0");
+                 setWeeklyActivity();
                  refreshProgressBar();
 
                  Toast.makeText(MainActivity.this,
@@ -217,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private View.OnClickListener createWeeklyActivityPopupListener() {
-        return new View.OnClickListener() {
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 View mView = getLayoutInflater().inflate(R.layout.weekly_activity_popup, null);
@@ -254,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
             }
         };
+        return listener;
     }
 
     private void attachWeekNavigationListeners() {
@@ -308,7 +312,12 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        dailyCalorieGoalBtn.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener listener = createDailyCalorieGoalPopupListener();
+        dailyCalorieGoalBtn.setOnClickListener(listener);
+    }
+
+    private View.OnClickListener createDailyCalorieGoalPopupListener() {
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 View mView = getLayoutInflater().inflate(R.layout.daily_popup, null);
@@ -347,7 +356,8 @@ public class MainActivity extends AppCompatActivity {
 
                 dialog.show();
             }
-        });
+        };
+        return listener;
     }
 
     private void drawProgressBar() {
