@@ -117,26 +117,27 @@
             android:layout_height="match_parent">
 
             <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center">
 
                 <TextView
                     android:id="@+id/dayLabel"
-                    android:layout_width="89dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:fontFamily="@font/carrois_gothic"
-                    android:paddingLeft="10pt"
+                    android:gravity="center"
                     android:text="Day"
                     android:textColor="#000000"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/weightLabel"
-                    android:layout_width="58dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10pt"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:fontFamily="@font/carrois_gothic"
                     android:text="Weight"
                     android:textColor="#000000"
@@ -146,8 +147,9 @@
                     android:id="@+id/caloriesLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:fontFamily="@font/carrois_gothic"
-                    android:paddingLeft="35pt"
                     android:text="Calories"
                     android:textColor="#000000"
                     android:textStyle="bold" />
@@ -163,9 +165,10 @@
                     android:id="@+id/mondayLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/carrois_gothic"
-                    android:paddingLeft="5pt"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="Monday"
+                    android:fontFamily="@font/carrois_gothic"
                     android:textColor="#000000"
                     android:textStyle="italic" />
 
@@ -173,26 +176,27 @@
                     android:id="@+id/mondayWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10pt"
-                    android:fontFamily="@font/carrois_gothic"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:hint="kg"
                     android:inputType="numberDecimal"
+                    android:fontFamily="@font/carrois_gothic"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="kg"
+                    android:textColorHint="@color/colorPrimary"/>
 
                 <EditText
                     android:id="@+id/mondayCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:fontFamily="@font/carrois_gothic"
-                    android:hint="cal"
                     android:inputType="numberSigned"
-                    android:paddingLeft="60pt"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="cal"
+                    android:textColorHint="@color/colorPrimary"/>
 
             </TableRow>
 
@@ -205,9 +209,10 @@
                     android:id="@+id/tuesdayLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/carrois_gothic"
-                    android:paddingLeft="5pt"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="Tuesday"
+                    android:fontFamily="@font/carrois_gothic"
                     android:textColor="#000000"
                     android:textStyle="italic" />
 
@@ -215,26 +220,27 @@
                     android:id="@+id/tuesdayWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10pt"
-                    android:fontFamily="@font/carrois_gothic"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:hint="kg"
+                    android:fontFamily="@font/carrois_gothic"
                     android:inputType="numberDecimal"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="kg"
+                    android:textColorHint="@color/colorPrimary"/>
 
                 <EditText
                     android:id="@+id/tuesdayCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:fontFamily="@font/carrois_gothic"
-                    android:hint="cal"
                     android:inputType="numberSigned"
-                    android:paddingLeft="60pt"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="cal"
+                    android:textColorHint="@color/colorPrimary"/>
 
             </TableRow>
 
@@ -247,9 +253,10 @@
                     android:id="@+id/wednesdayLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/carrois_gothic"
-                    android:paddingLeft="5pt"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="Wednesday"
+                    android:fontFamily="@font/carrois_gothic"
                     android:textColor="#000000"
                     android:textStyle="italic" />
 
@@ -257,26 +264,27 @@
                     android:id="@+id/wednesdayWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10pt"
-                    android:fontFamily="@font/carrois_gothic"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:hint="kg"
+                    android:fontFamily="@font/carrois_gothic"
                     android:inputType="numberDecimal"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="kg"
+                    android:textColorHint="@color/colorPrimary"/>
 
                 <EditText
                     android:id="@+id/wednesdayCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:fontFamily="@font/carrois_gothic"
-                    android:hint="cal"
                     android:inputType="numberSigned"
-                    android:paddingLeft="60pt"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="cal"
+                    android:textColorHint="@color/colorPrimary"/>
 
             </TableRow>
 
@@ -289,9 +297,10 @@
                     android:id="@+id/thursdayLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/carrois_gothic"
-                    android:paddingLeft="5pt"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="Thursday"
+                    android:fontFamily="@font/carrois_gothic"
                     android:textColor="#000000"
                     android:textStyle="italic" />
 
@@ -299,41 +308,43 @@
                     android:id="@+id/thursdayWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10pt"
-                    android:fontFamily="@font/carrois_gothic"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:hint="kg"
+                    android:fontFamily="@font/carrois_gothic"
                     android:inputType="numberDecimal"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="kg"
+                    android:textColorHint="@color/colorPrimary"/>
 
                 <EditText
                     android:id="@+id/thursdayCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:fontFamily="@font/carrois_gothic"
-                    android:hint="cal"
                     android:inputType="numberSigned"
-                    android:paddingLeft="60pt"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="cal"
+                    android:textColorHint="@color/colorPrimary"/>
 
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center">
 
                 <TextView
                     android:id="@+id/fridayLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/carrois_gothic"
-                    android:paddingLeft="5pt"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="Friday"
+                    android:fontFamily="@font/carrois_gothic"
                     android:textColor="#000000"
                     android:textStyle="italic" />
 
@@ -341,41 +352,43 @@
                     android:id="@+id/fridayWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10pt"
-                    android:fontFamily="@font/carrois_gothic"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:hint="kg"
+                    android:fontFamily="@font/carrois_gothic"
                     android:inputType="numberDecimal"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="kg"
+                    android:textColorHint="@color/colorPrimary"/>
 
                 <EditText
                     android:id="@+id/fridayCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:fontFamily="@font/carrois_gothic"
-                    android:hint="cal"
                     android:inputType="numberSigned"
-                    android:paddingLeft="60pt"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="cal"
+                    android:textColorHint="@color/colorPrimary"/>
 
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center">
 
                 <TextView
                     android:id="@+id/saturdayLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/carrois_gothic"
-                    android:paddingLeft="5pt"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="Saturday"
+                    android:fontFamily="@font/carrois_gothic"
                     android:textColor="#000000"
                     android:textStyle="italic" />
 
@@ -383,40 +396,43 @@
                     android:id="@+id/saturdayWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10pt"
-                    android:fontFamily="@font/carrois_gothic"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:hint="kg"
+                    android:fontFamily="@font/carrois_gothic"
                     android:inputType="numberDecimal"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="kg"
+                    android:textColorHint="@color/colorPrimary"/>
 
                 <EditText
                     android:id="@+id/saturdayCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:fontFamily="@font/carrois_gothic"
-                    android:hint="cal"
                     android:inputType="numberSigned"
-                    android:paddingLeft="60pt"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="cal"
+                    android:textColorHint="@color/colorPrimary"/>
 
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center">
 
                 <TextView
                     android:id="@+id/sundayLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5pt"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="Sunday"
+                    android:fontFamily="@font/carrois_gothic"
                     android:textColor="#000000"
                     android:textStyle="italic" />
 
@@ -424,26 +440,27 @@
                     android:id="@+id/sundayWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10pt"
-                    android:fontFamily="@font/carrois_gothic"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:hint="kg"
+                    android:fontFamily="@font/carrois_gothic"
                     android:inputType="numberDecimal"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="kg"
+                    android:textColorHint="@color/colorPrimary"/>
 
                 <EditText
                     android:id="@+id/sundayCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:fontFamily="@font/carrois_gothic"
-                    android:hint="cal"
                     android:inputType="numberSigned"
-                    android:paddingLeft="60pt"
                     android:textColor="#000000"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:hint="cal"
+                    android:textColorHint="@color/colorPrimary"/>
 
             </TableRow>
         </TableLayout>
