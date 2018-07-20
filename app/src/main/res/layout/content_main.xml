@@ -559,36 +559,70 @@
                     android:textSize="19sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5pt"
+                    android:background="@drawable/border"
+                    android:progressDrawable="@drawable/custom_progress_bar" />
+
+                <TextView
+                    android:id="@+id/progressBarText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/progressBar"
+                    android:layout_alignLeft="@id/progressBar"
+                    android:layout_alignRight="@id/progressBar"
+                    android:layout_alignTop="@id/progressBar"
+                    android:fontFamily="@font/carrois_gothic_sc"
+                    android:gravity="center"
+                    android:text="0 left" />
+
+            </RelativeLayout>
         </LinearLayout>
 
-        <RelativeLayout
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5pt"
-                android:background="@drawable/border"
-                android:progressDrawable="@drawable/custom_progress_bar" />
-            
-            <TextView
-                android:id="@+id/progressBarText"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="1dp">
+
+            <Button
+                android:id="@+id/btnProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/progressBar"
-                android:layout_alignRight="@id/progressBar"
-                android:layout_alignTop="@id/progressBar"
-                android:layout_alignBottom="@id/progressBar"
-                android:fontFamily="@font/carrois_gothic_sc"
-                android:gravity="center"
-                android:text="0 left"/>
-            
-        </RelativeLayout>
-
-
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_baseline_person_outline_24px"
+                android:text="Profile"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorProfile"/>
+            <Button
+                android:id="@+id/btnDiary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_baseline_date_range_24px"
+                android:text="Diary"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorPrimary"/>
+            <Button
+                android:id="@+id/btnStatistics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_baseline_equalizer_24px"
+                android:text="Statistics"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorStatistics"/>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
