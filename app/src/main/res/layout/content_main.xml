@@ -25,7 +25,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
-            android:background="@color/colorWhite"
+            android:background="@drawable/primary_button_bg"
             android:drawableLeft="@drawable/ic_baseline_arrow_back_ios_24px"
             android:paddingLeft="4dp" />
 
@@ -50,7 +50,7 @@
             android:layout_gravity="center"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
-            android:background="@color/colorWhite"
+            android:background="@drawable/primary_button_bg"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24px"
             android:paddingLeft="3dp" />
     </LinearLayout>
@@ -73,6 +73,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:paddingLeft="10dp"
+                android:paddingRight="1dp"
                 android:gravity="right|center_vertical"
                 android:fontFamily="@font/carrois_gothic"
                 android:text="Daily calories:"
@@ -87,7 +88,7 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="1pt"
                 android:layout_weight="1"
-                android:background="@android:color/background_light"
+                android:background="@drawable/primary_button_bg"
                 android:fontFamily="@font/carrois_gothic"
                 android:textAlignment="center"
                 android:textColor="#000000"
@@ -457,9 +458,10 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/weekStatistics"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2pt"
+            android:layout_marginTop="0.5dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -539,26 +541,20 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/progressBarProportion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/progressBarProportion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="4pt"
-                    android:drawableRight="@drawable/ic_fire"
-                    android:fontFamily="@font/carrois_gothic"
-                    android:gravity="right"
-                    android:text="0 / 0"
-                    android:textColor="#000000"
-                    android:textSize="19sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:paddingRight="8dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="-5dp"
+                android:fontFamily="@font/carrois_gothic"
+                android:text="0 / 0"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:drawableRight="@drawable/ic_fire"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -569,7 +565,7 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5pt"
+                    android:layout_margin="3pt"
                     android:background="@drawable/border"
                     android:progressDrawable="@drawable/custom_progress_bar" />
 
@@ -590,6 +586,7 @@
 
 
         <LinearLayout
+            android:id="@+id/navigationFooterMenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
