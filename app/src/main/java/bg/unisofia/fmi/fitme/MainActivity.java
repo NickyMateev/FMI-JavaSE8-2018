@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private static TextView currentWeekLabel, avgWeight, progressBarProportion, progressBarText;
     private static Button previousWeekBtn, nextWeekBtn, dailyCalorieGoalBtn, weeklyActivityWorkoutsBtn, weeklyActivityStepsBtn;
 
+    private static RelativeLayout progressBarLayout;
     private static ProgressBar progressBar;
 
     @Override
@@ -195,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
         weeklyActivityWorkoutsBtn = (Button) findViewById(R.id.btnWeeklyWorkoutsActivity);
         weeklyActivityStepsBtn = (Button) findViewById(R.id.btnWeeklyStepsActivity);
 
+        progressBarLayout = (RelativeLayout) findViewById(R.id.progressBarLayout);
         progressBarProportion = (TextView) findViewById(R.id.progressBarProportion);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBarText = (TextView) findViewById(R.id.progressBarText);
@@ -211,6 +214,66 @@ public class MainActivity extends AppCompatActivity {
         attachWeightListeners();
         attachCalorieGoalListeners();
         attachWeekActivityBtnListener();
+        attachProgressBarLayoutListener();
+    }
+
+    private void attachProgressBarLayoutListener() {
+        progressBarLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(MainActivity.this,
+                        getProgressBarLayoutText(),
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+    }
+
+    private String getProgressBarLayoutText() {
+        int remainingCalories = calculateRemainingCaloriesForWeek();
+        int remainingDaysInWeek = determineDaysInWeekRemaining();
+
+        String userMessage;
+        if(remainingDaysInWeek == 0) {
+            userMessage = getEndOfWeekMessage(remainingCalories);
+        } else {
+            userMessage = getAvgDailyCaloriesMessage(remainingCalories, remainingDaysInWeek);
+        }
+
+        return userMessage;
+    }
+
+    private int calculateRemainingCaloriesForWeek() {
+        int currentCaloriesForTheWeek= 0;
+        for (Day day: currentWeekDays) {
+            currentCaloriesForTheWeek += day.getCalories();
+        }
+        int totalWeeklyCaloriesGoal = currentWeek.getDailyCalories() * DAYS_IN_WEEK;
+        return totalWeeklyCaloriesGoal - currentCaloriesForTheWeek;
+    }
+
+    private int determineDaysInWeekRemaining() {
+        int days = DAYS_IN_WEEK;
+        for (EditText calorieField : calorieFields) {
+            if(!calorieField.getText().toString().isEmpty())  {
+                days--;
+            }
+        }
+        return days;
+    }
+
+    private String getEndOfWeekMessage(int remainingCalories) {
+        if(remainingCalories == 0) {
+            return getString(R.string.week_calories_congrats);
+        } else if (remainingCalories > 0) {
+            return getString(R.string.week_calories_deficit);
+        } else {
+            return getString(R.string.week_calories_surplus);
+        }
+    }
+
+    private String getAvgDailyCaloriesMessage(int remainingCalories, int remainingDaysInWeek) {
+        return getString(R.string.week_calories_avg_per_day) + String.valueOf(remainingCalories / remainingDaysInWeek);
     }
 
     private void attachWeekActivityBtnListener() {

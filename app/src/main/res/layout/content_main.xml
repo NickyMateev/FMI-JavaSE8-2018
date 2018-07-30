@@ -574,6 +574,7 @@
                 android:drawableRight="@drawable/ic_fire"/>
 
             <RelativeLayout
+                android:id="@+id/progressBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
